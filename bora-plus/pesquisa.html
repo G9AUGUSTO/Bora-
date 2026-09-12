@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bora+ · Pesquisar</title>
+</head>
+<body>
+  <div class="screen">
+    <header class="topbar">
+      <a class="wordmark" href="pesquisa.html">Bora<span>+</span></a>
+      <a class="exit-link" href="perfil.html">Perfil</a>
+    </header>
+
+    <div class="app-frame app-frame--wide">
+      <h1 class="page-title">Pra onde vamos hoje?</h1>
+      <p class="page-sub">Filtre por bairro, preço ou categoria pra achar a melhor opção.</p>
+
+      <form id="filtroForm" class="filter-bar card">
+        <div class="field">
+          <label for="bairro">Bairro</label>
+          <select id="bairro">
+            <option value="">Todos os bairros</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="categoria">Categoria</label>
+          <select id="categoria">
+            <option value="">Todas as categorias</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="preco">Preço</label>
+          <select id="preco">
+            <option value="">Qualquer preço</option>
+            <option value="1">$ · Econômico</option>
+            <option value="2">$$ · Médio</option>
+            <option value="3">$$$ · Alto</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn--primary filter-bar__submit">Aplicar filtro</button>
+      </form>
+
+      <div class="results-head">
+        <span id="resultsCount" class="results-count">—</span>
+        <div class="field results-sort">
+          <label for="ordenar">Ordenar</label>
+          <select id="ordenar">
+            <option value="relevancia">Relevância</option>
+            <option value="preco-asc">Menor preço</option>
+            <option value="preco-desc">Maior preço</option>
+            <option value="distancia">Mais próximos de mim</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="filterMsg" class="msg msg--info"></div>
+
+      <ul id="resultsList" class="results-list"></ul>
+    </div>
+
+    <nav class="tabbar">
+      <div class="tabbar__inner">
+        <a class="tabbar__item is-active" href="pesquisa.html"><span>🔍</span>Pesquisar</a>
+        <a class="tabbar__item" href="mapa.html"><span>📍</span>Mapa</a>
+        <a class="tabbar__item" href="perfil.html"><span>👤</span>Perfil</a>
+      </div>
+    </nav>
+  </div>
+  
+</body>
+</html>

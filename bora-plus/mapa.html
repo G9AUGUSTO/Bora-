@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bora+ · Mapa</title>
+</head>
+<body>
+  <div class="screen">
+    <header class="topbar">
+      <a class="wordmark" href="pesquisa.html">Bora<span>+</span></a>
+      <a class="exit-link" href="perfil.html">Perfil</a>
+    </header>
+
+    <div class="app-frame app-frame--wide map-frame">
+      <h1 class="page-title">O que tem perto de você</h1>
+      <p class="page-sub">Toque em um marcador para ver o resumo do lugar.</p>
+
+      <div id="permissionState" class="card permission-card">
+        <div class="permission-icon">📍</div>
+        <h2>Precisamos da sua localização</h2>
+        <p>Para mostrar os estabelecimentos cadastrados perto de você no mapa, permita o acesso à sua localização.</p>
+        <button id="allowLocationBtn" class="btn btn--primary">Permitir localização</button>
+        <p id="permissionError" class="msg msg--error"></p>
+      </div>
+
+      <div id="mapState" class="map-wrap" hidden>
+        <div id="mapCanvas" class="map-canvas">
+          <div class="map-canvas__grid"></div>
+          <div id="userMarker" class="map-marker map-marker--user" title="Você está aqui">
+            <span class="map-marker__dot"></span>
+          </div>
+        </div>
+
+        <div id="summaryCard" class="summary-card" hidden>
+          <button id="closeSummary" class="summary-card__close" aria-label="Fechar">×</button>
+          <div id="summaryContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tabbar">
+      <div class="tabbar__inner">
+        <a class="tabbar__item" href="pesquisa.html"><span>🔍</span>Pesquisar</a>
+        <a class="tabbar__item is-active" href="mapa.html"><span>📍</span>Mapa</a>
+        <a class="tabbar__item" href="perfil.html"><span>👤</span>Perfil</a>
+      </div>
+    </nav>
+  </div>
+
+</body>
+</html>

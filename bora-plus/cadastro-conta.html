@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bora+ · Criar conta</title>
+</head>
+<body>
+  <div class="screen">
+    <div class="app-frame login-frame">
+
+      <div class="login-hero login-hero--compact">
+        <a class="wordmark" href="index.html">Bora<span>+</span></a>
+      </div>
+
+      <div class="card login-card">
+        <h1>Criar conta</h1>
+        <p class="login-card__sub">Leva menos de um minuto.</p>
+
+        <div id="cadastroMsg" class="msg msg--error" role="alert"></div>
+
+        <form id="cadastroForm" novalidate>
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required minlength="6">
+          </div>
+          <div class="field">
+            <label for="confirmarSenha">Confirmar senha</label>
+            <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Repita a senha" autocomplete="new-password" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn--primary">Criar conta e entrar</button>
+        </form>
+
+        <p class="login-switch">
+          Já tem conta? <a href="index.html">Fazer login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bora+ · Cadastrar estabelecimento</title>
+</head>
+<body>
+  <div class="screen">
+    <header class="topbar">
+      <a class="wordmark" href="pesquisa.html">Bora<span>+</span></a>
+      <a class="exit-link" href="perfil.html">Perfil</a>
+    </header>
+
+    <div class="app-frame">
+      <h1 class="page-title">Cadastrar estabelecimento</h1>
+      <p class="page-sub">Como administrador, cadastre seu bar ou casa noturna para ganhar visibilidade na plataforma.</p>
+
+      <div id="formMsg" class="msg msg--error"></div>
+
+      <form id="cadastroEstabForm" class="card" novalidate>
+        <div class="field">
+          <label for="nome">Nome do estabelecimento *</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex.: Bar do Zé" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="categoria">Categoria *</label>
+            <select id="categoria" required>
+              <option value="">Selecione</option>
+              <option>Bar</option>
+              <option>Choperia</option>
+              <option>Pub</option>
+              <option>Casa noturna</option>
+              <option>Rooftop</option>
+              <option>Lounge</option>
+              <option>Restaurante-bar</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="preco">Faixa de preço *</label>
+            <select id="preco" required>
+              <option value="">Selecione</option>
+              <option value="1">$ · Econômico</option>
+              <option value="2">$$ · Médio</option>
+              <option value="3">$$$ · Alto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bairro">Bairro *</label>
+          <input type="text" id="bairro" name="bairro" placeholder="Ex.: Vila Madalena" required>
+        </div>
+
+        <div class="field">
+          <label for="endereco">Endereço completo *</label>
+          <input type="text" id="endereco" name="endereco" placeholder="Rua, número - bairro, cidade" required>
+          <p class="field-hint">Usado para calcular distância e traçar rota no Google Maps.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="lat">Latitude *</label>
+            <input type="text" id="lat" name="lat" placeholder="-23.5560" required>
+          </div>
+          <div class="field">
+            <label for="lng">Longitude *</label>
+            <input type="text" id="lng" name="lng" placeholder="-46.6910" required>
+          </div>
+        </div>
+        <p class="field-hint" style="margin-top:-10px;margin-bottom:16px;">Dica: clique com o botão direito em um ponto no Google Maps para copiar as coordenadas.</p>
+
+        <div class="field">
+          <label for="descricao">Descrição *</label>
+          <textarea id="descricao" name="descricao" placeholder="Conte o que torna o lugar especial" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary">Salvar</button>
+      </form>
+    </div>
+
+    <div id="duplicateModal" class="modal-overlay" hidden>
+      <div class="modal-card">
+        <h2>Este estabelecimento já existe?</h2>
+        <p>Já encontramos um estabelecimento cadastrado com esse mesmo nome e endereço. Deseja continuar mesmo assim?</p>
+        <div class="modal-actions">
+          <button id="cancelDuplicate" class="btn btn--ghost">Cancelar</button>
+          <button id="confirmDuplicate" class="btn btn--primary">Cadastrar assim mesmo</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tabbar">
+      <div class="tabbar__inner">
+        <a class="tabbar__item" href="pesquisa.html"><span>🔍</span>Pesquisar</a>
+        <a class="tabbar__item" href="mapa.html"><span>📍</span>Mapa</a>
+        <a class="tabbar__item" href="perfil.html"><span>👤</span>Perfil</a>
+      </div>
+    </nav>
+  </div>
+
+</body>
+</html>
