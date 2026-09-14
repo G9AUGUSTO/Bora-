@@ -1,0 +1,141 @@
+CREATE DATABASE IF NOT EXISTS boraplus
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE boraplus;
+
+
+CREATE TABLE usuarios (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nome            VARCHAR(120)  NOT NULL,
+  email           VARCHAR(160)  NOT NULL UNIQUE,
+  senha_hash      VARCHAR(255)  NOT NULL,
+  telefone        VARCHAR(20),
+  data_nascimento DATE,
+  foto_perfil_url VARCHAR(255),
+  criado_em       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
+                                ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE administradores (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nome            VARCHAR(120)  NOT NULL,
+  email           VARCHAR(160)  NOT NULL UNIQUE,
+  senha_hash      VARCHAR(255)  NOT NULL,
+  telefone        VARCHAR(20),
+  criado_em       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE categorias (
+  id    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nome  VARCHAR(60) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE estabelecimentos (
+  id                  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  administrador_id    INT UNSIGNED NOT NULL,
+  nome                VARCHAR(150) NOT NULL,
+  descricao           TEXT,
+  endereco            VARCHAR(255) NOT NULL,
+  latitude            DECIMAL(10, 7),
+  longitude           DECIMAL(10, 7),
+  telefone            VARCHAR(20),
+  horario_abertura    TIME,
+  horario_fechamento  TIME,
+  foto_capa_url       VARCHAR(255),
+  criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                                ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_estabelecimento_admin
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+    ON DELETE CASCADE
+);
+
+
+CREATE INDEX idx_estabelecimentos_localizacao
+  ON estabelecimentos (latitude, longitude);
+
+
+CREATE TABLE estabelecimento_categorias (
+  estabelecimento_id INT UNSIGNED NOT NULL,
+  categoria_id        INT UNSIGNED NOT NULL,
+  PRIMARY KEY (estabelecimento_id, categoria_id),
+  CONSTRAINT fk_ec_estabelecimento
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_ec_categoria
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+    ON DELETE CASCADE
+);
+
+
+CREATE TABLE fotos_estabelecimento (
+  id                  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  estabelecimento_id  INT UNSIGNED NOT NULL,
+  foto_url            VARCHAR(255) NOT NULL,
+  ordem               SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_foto_estabelecimento
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    ON DELETE CASCADE
+);
+
+
+CREATE TABLE eventos (
+  id                  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  estabelecimento_id  INT UNSIGNED NOT NULL,
+  nome                VARCHAR(150) NOT NULL,
+  descricao           TEXT,
+  data_inicio         DATETIME NOT NULL,
+  data_fim            DATETIME,
+  preco               DECIMAL(8, 2) DEFAULT 0.00,
+  imagem_url          VARCHAR(255),
+  criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_evento_estabelecimento
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    ON DELETE CASCADE
+);
+
+
+CREATE INDEX idx_eventos_data_inicio ON eventos (data_inicio);
+
+
+CREATE TABLE avaliacoes (
+  id                  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  usuario_id          INT UNSIGNED NOT NULL,
+  estabelecimento_id  INT UNSIGNED NOT NULL,
+  nota                TINYINT UNSIGNED NOT NULL,
+  comentario          TEXT,
+  criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_avaliacao_usuario
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_avaliacao_estabelecimento
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    ON DELETE CASCADE,
+  CONSTRAINT chk_nota_valida CHECK (nota BETWEEN 1 AND 5),
+  CONSTRAINT uq_avaliacao_unica UNIQUE (usuario_id, estabelecimento_id)
+);
+
+
+CREATE TABLE favoritos (
+  usuario_id          INT UNSIGNED NOT NULL,
+  estabelecimento_id  INT UNSIGNED NOT NULL,
+  criado_em           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (usuario_id, estabelecimento_id),
+  CONSTRAINT fk_favorito_usuario
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    ON DELETE CASCADE,
+  CONSTRAINT fk_favorito_estabelecimento
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    ON DELETE CASCADE
+);
+
+
+INSERT INTO categorias (nome) VALUES
+  ('Bar'), ('Balada'), ('Pub'), ('Restaurante'), ('Rooftop'), ('Casa de shows');
+
+
