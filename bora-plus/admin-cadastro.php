@@ -11,10 +11,7 @@ $dados = [
     'endereco' => '', 'descricao' => '',
 ];
 
-/**
- * Obtém latitude e longitude automaticamente a partir do endereço e bairro
- * usando OpenStreetMap (Nominatim), com fallback automático.
- */
+
 function obterCoordenadas(string $endereco, string $bairro = ''): array {
     $busca = trim($endereco);
     if ($bairro !== '' && stripos($endereco, $bairro) === false) {
@@ -38,12 +35,12 @@ function obterCoordenadas(string $endereco, string $bairro = ''): array {
         }
     }
 
-    // Se o endereço contiver menção a Curitiba ou PR
+
     if (stripos($busca, 'curitiba') !== false || stripos($busca, 'pr') !== false) {
         return [-25.4363, -49.2848];
     }
 
-    // Fallback padrão: São Paulo (Centro)
+
     return [-23.5505, -46.6333];
 }
 
@@ -53,14 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $confirmarDuplicado = isset($_POST['confirmar_duplicado']) && $_POST['confirmar_duplicado'] === '1';
 
-    // ---- Validação básica ----
+
     if ($dados['nome'] === '' || $dados['categoria'] === '' || $dados['preco'] === ''
         || $dados['bairro'] === '' || $dados['endereco'] === '' || $dados['descricao'] === '') {
         $erro = 'Preencha todos os campos obrigatórios.';
     } elseif (!in_array($dados['preco'], ['1', '2', '3'], true)) {
         $erro = 'Selecione uma faixa de preço válida.';
     } else {
-        // ---- Verifica duplicidade (mesmo nome + mesmo endereço) ----
+     
         $stmtDup = $pdo->prepare('SELECT id FROM estabelecimentos WHERE nome = :nome AND endereco = :endereco LIMIT 1');
         $stmtDup->execute(['nome' => $dados['nome'], 'endereco' => $dados['endereco']]);
         $jaExiste = (bool)$stmtDup->fetch();
